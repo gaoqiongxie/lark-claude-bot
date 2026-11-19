@@ -35,6 +35,44 @@
 - **需求流水线**（可选）：按会话持久化需求状态机，多阶段开发流程重启可恢复
 - **桌面通知**（可选）：任务完成写入通知文件，可对接桌面宠物等提醒工具
 
+## 最快接入：让 AI 帮你部署
+
+不想逐行照手册？把下面这段 prompt **原样**发给你常用的 AI 编码助手（Claude Code / Trae / Kimi / Cursor 均可），它会照着本仓库自动完成部署，只有建飞书应用和登录确认两步需要你自己操作：
+
+```text
+我要部署一个飞书 AI 机器人，引擎是 Claude Code CLI，仓库地址：
+https://github.com/gaoqiongxie/lark-claude-bot
+
+请先通读仓库里的 README.md 和 docs/工作机制说明.md，然后按下面的分工帮我部署：
+
+【你（AI）自动完成】
+1. git clone 该仓库到本地
+2. 检查环境：Node.js ≥ 18；npm i -g @larksuite/cli @anthropic-ai/claude-code
+3. 复制 .env.example 为 .env，按我的环境填写（我不知道的项先留空并问我）
+4. 每次启动前先 node --check bot.js 做语法校验
+
+【必须我本人操作，你给我逐步指令即可，不要编造凭证】
+5. 飞书开放平台建企业自建应用：拿 App ID/Secret、订阅 im.message.receive_v1 事件、
+   启用长连接(websocket)接收方式、开通 im:message 等权限、发布版本、把机器人拉进群
+6. 把 App ID/Secret 登记成 lark-cli profile：lark-cli config init --new --name claude
+   --app-id <id> --app-secret-stdin（密钥从我这里用安全方式输入，不要让我贴进对话）
+7. 确认 Claude 已登录可用（claude 命令能正常响应）
+
+【联调验证（启动 node bot.js 后）】
+8. 我先给机器人发条私聊消息，你从 bot.log 里找到我的 sender open_id，填回 .env 的
+   BOT_OWNER_OPEN_ID 并重启
+9. 验证清单：bot.log 出现长连接建立成功 → 私聊有回复 → 受信任群 @ 机器人有回复 →
+   群友（非主人）@ 它时自动剥离 MCP 并以只读白名单运行
+
+【红线】
+10. .env / mcp-servers.json 含凭证，绝不提交 git、绝不完整打印到对话
+11. 不执行 git push --force / git reset --hard；本仓库不需要推送到任何远程
+12. 部署完成后帮我配 watchdog.vbs 开机自启（Windows：快捷方式指向
+    wscript <目录>\watchdog.vbs，放进 shell:startup）
+```
+
+> 想要 Codex 引擎版？把仓库地址换成 `https://github.com/gaoqiongxie/lark-codex-bot`，第 2 步依赖换成 `@openai/codex`，第 7 步换成 `codex login` 登录授权即可，其余完全一样。
+
 ## 快速开始
 
 ### 1. 创建飞书自建应用
