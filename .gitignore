@@ -1,0 +1,29 @@
+# 依赖与密钥
+node_modules/
+.env
+mcp-servers.json
+lark-cli-home/
+
+# 运行时产物（机器人自动创建）
+tmp/
+work/
+pipeline/
+bot-memory/
+ops-logs/
+stream-tee/
+bg-tasks/
+outbox/
+bot.log
+bot.err.log
+bot.pid
+chat-sessions.json
+receive-wal.jsonl
+replied-wal.log
+pending-replies.jsonl
+
+# 系统与编辑器
+*.log
+*-wal*
+__pycache__/
+Thumbs.db
+.DS_Store

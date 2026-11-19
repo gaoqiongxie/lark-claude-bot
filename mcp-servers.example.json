@@ -1,0 +1,19 @@
+{
+  "_说明": "MCP 服务器配置（Claude Code --mcp-config 格式）。复制本文件为 mcp-servers.json 后填入真实服务。凭证一律用环境变量注入，不要写死密码。只有主人（BOT_OWNER_OPEN_ID）且文件存在时才挂载；非主人会话会自动剥离 --mcp-config 并收紧 --allowedTools。",
+  "mcpServers": {
+    "playwright": {
+      "_示例用途": "浏览器自动化（操作网页、截图、抓取），无需凭证",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    },
+    "my-service": {
+      "_示例用途": "带凭证的自定义 MCP 服务（command 型）",
+      "command": "node",
+      "args": ["mcp-server.js"],
+      "env": {
+        "API_BASE": "https://your-service.example.com",
+        "API_TOKEN": "从环境变量注入，勿写死"
+      }
+    }
+  }
+}
